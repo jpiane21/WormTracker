@@ -40,9 +40,9 @@ public class ImageRecorder implements Runnable {
             try (FileWriter fw = new FileWriter(file)) {
                 imageProducer.clear();
                 while (run) {
-                    if (imageProducer.size() < 30) {
+                    if (imageProducer.size() < 5) {
                         try {
-                            Thread.sleep(100);
+                            Thread.sleep(10);
                         } catch (InterruptedException e) {
                         }
                         continue;

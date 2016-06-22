@@ -7,7 +7,6 @@ import static gui.GUI.showExceptionError;
 import static gui.GUI.showWarning;
 import imageAcquisition.ImageProducer;
 import imageAqcuisition.imageInputSource.CameraConnectException;
-import imageAqcuisition.imageInputSource.ImageInputSource;
 import imageAqcuisition.imageInputSource.SerialCamera;
 import imageProcessing.ImageProcessor;
 import imageProcessing.ImageTools;
@@ -293,6 +292,7 @@ public class Controller extends VBox {
                 }
                 motorControl.stop();
                 motorControl.detach();
+                motorControl.closePort();
                 inputViewFeed.detach();
                 serialCamera.close();
                 dto.Properties.run = false;
@@ -333,7 +333,7 @@ public class Controller extends VBox {
                 ImageEntry entry = src.peek();
                 if (entry == null) {
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

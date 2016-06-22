@@ -16,6 +16,8 @@ import gui.Controller;
 import gui.GUI;
 import static gui.GUI.showExceptionError;
 import imageProcessing.ImageProcessor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;
@@ -64,6 +66,13 @@ public class MotorControl implements Runnable {
 
     public void detach() {
         this.imageProcessor = null;
+    }
+    
+    public void closePort() {
+        try {
+            this.serialPort.closePort();
+        } catch (SerialPortException ex) {
+        }
     }
 
     /**

@@ -9,12 +9,10 @@ public class Properties {
 
     public static int IMAGE_BUFFER_SIZE = 120;
 
-    public static int RECORDING_FLUSH_INTERVAL = 30; //In frames
-
     public static int SEGMENTATION_WINDOW_SIZE = 25;
     public static int SEGMENTATION_COMPONENT_MIN_SIZE = 5;
     public static double SEGMENTATION_THRESHOLD = 0.80; //Magic number. Don't touch.
-    public static int SEGMENTATION_DELAY = 333;
+    public static int SEGMENTATION_DELAY = 15;
     public static int SEGMENTATION_FAILURE_THRESHOLD = 1200000; //Time until we give up trying
 
     /**
