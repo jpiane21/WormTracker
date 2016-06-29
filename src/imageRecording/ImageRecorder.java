@@ -15,10 +15,10 @@ public class ImageRecorder implements Runnable {
 
     private final ImageProducer imageProducer;
     private final Thread thread;
-    private final File outputDirectory;
+    private final String outputDirectory;
     private boolean run = true;
 
-    public ImageRecorder(ImageProducer imageProducer, File destination) {
+    public ImageRecorder(ImageProducer imageProducer, String destination) {
         this.imageProducer = imageProducer;
         outputDirectory = destination;
         thread = new Thread(this, "Image Recorder");
@@ -36,8 +36,8 @@ public class ImageRecorder implements Runnable {
     public void run() {
         int frame = 0;
         try {
-            File file = new File(outputDirectory.getAbsolutePath() + "/log.txt");
-            try (FileWriter fw = new FileWriter(file)) {
+            File file = new File(outputDirectory + "/log.txt");
+           try (FileWriter fw = new FileWriter(file)) {
                 imageProducer.clear();
                 while (run) {
                     if (imageProducer.size() < 5) {
@@ -53,7 +53,7 @@ public class ImageRecorder implements Runnable {
                         img = ImageTools.toBufferedImage(entry.img);
                     }
                     try {
-                        ImageIO.write(img, "jpeg", new File(outputDirectory.getAbsolutePath() + "/" + String.format("%07d", frame) + ".jpg"));
+                        ImageIO.write(img, "jpeg", new File(outputDirectory + "/" + String.format("%07d", frame) + ".jpeg"));
                         fw.write(String.format("%07d %d %d %d %d%n", frame, entry.timeStamp, entry.x, entry.y, entry.moving));
                     } catch (IOException e) {
                         e.printStackTrace();

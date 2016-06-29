@@ -41,7 +41,8 @@ public class Controller extends VBox {
     private ImageRecorder imageRecorder;
     private SerialCamera serialCamera;
     public Stage stage;
-    private File recordingLocation = null;
+    //private File recordingLocation = null;
+    private String recordingLocation;
     private boolean tracking = false;
     private boolean recording = false;
 
@@ -86,8 +87,12 @@ public class Controller extends VBox {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Choose Recording Location");
         chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        recordingLocation = chooser.showDialog(stage);
-        fileLocation.setText(recordingLocation.getAbsolutePath());
+        try {
+            recordingLocation = chooser.showDialog(stage).getAbsolutePath();
+            fileLocation.setText(recordingLocation);
+        } catch (NullPointerException ex) {
+
+        }
     }
 
     @FXML
