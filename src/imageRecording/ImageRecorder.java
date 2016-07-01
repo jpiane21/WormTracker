@@ -5,7 +5,9 @@ import imageProcessing.ImageTools;
 import imageProcessing.ImageTools.ImageEntry;
 
 import java.awt.image.BufferedImage;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -36,30 +38,41 @@ public class ImageRecorder implements Runnable {
     public void run() {
         int frame = 0;
         try {
-            File file = new File(outputDirectory + "/log.txt");
-           try (FileWriter fw = new FileWriter(file)) {
-                imageProducer.clear();
-                while (run) {
-                    if (imageProducer.size() < 5) {
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
+            try (DataOutputStream os = new DataOutputStream(new FileOutputStream(new File(outputDirectory + "/log.dat")))) {
+                File file = new File(outputDirectory + "/log.txt");
+                try (FileWriter fw = new FileWriter(file)) {
+                    imageProducer.clear();
+                    while (run) {
+                        if (imageProducer.size() < 30) {
+                            try {
+                                Thread.sleep(10);
+                            } catch (InterruptedException e) {
+                            }
+                            continue;
                         }
-                        continue;
+                        ImageEntry entry = imageProducer.get();
+                        BufferedImage img;
+                        synchronized (entry) {
+                            img = ImageTools.toBufferedImage(entry.img);
+                        }
+                        try {
+                            ImageIO.write(img, "jpeg", new File(outputDirectory + "/" + String.format("%07d", frame) + ".jpeg"));
+                            fw.write(String.format("%07d %d %d %d %d%n", frame, entry.timeStamp, entry.x, entry.y, entry.moving));
+                            os.writeInt(frame);
+                            os.writeLong(entry.timeStamp);
+                            os.writeInt(entry.x);
+                            os.writeInt(entry.y);
+                            os.writeInt(entry.moving);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            frame++;
+                        }
+                        if (frame % 30 == 0) {
+                            os.flush();
+                        }
                     }
-                    ImageEntry entry = imageProducer.get();
-                    BufferedImage img;
-                    synchronized (entry) {
-                        img = ImageTools.toBufferedImage(entry.img);
-                    }
-                    try {
-                        ImageIO.write(img, "jpeg", new File(outputDirectory + "/" + String.format("%07d", frame) + ".jpeg"));
-                        fw.write(String.format("%07d %d %d %d %d%n", frame, entry.timeStamp, entry.x, entry.y, entry.moving));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        frame++;
-                    }
+                    fw.close();
                 }
             }
         } catch (Exception e) {
