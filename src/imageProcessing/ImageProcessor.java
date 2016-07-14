@@ -1,6 +1,5 @@
 package imageProcessing;
 
-import gui.Controller;
 import gui.GUI;
 import imageAcquisition.ImageProducer;
 import imageProcessing.ImageTools.ImageEntry;
