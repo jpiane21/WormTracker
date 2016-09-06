@@ -11,4 +11,5 @@ import java.nio.ByteBuffer;
 public interface ImageInputSource {
 	public ByteBuffer getImage();
 	public boolean isReady();
+        public void close();
 }

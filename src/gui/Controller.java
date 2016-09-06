@@ -7,6 +7,8 @@ import static gui.GUI.showExceptionError;
 import static gui.GUI.showWarning;
 import imageAcquisition.ImageProducer;
 import imageAqcuisition.imageInputSource.CameraConnectException;
+import imageAqcuisition.imageInputSource.ImageInputSource;
+import imageAqcuisition.imageInputSource.ImageSequence;
 import imageAqcuisition.imageInputSource.SerialCamera;
 import imageProcessing.ImageProcessor;
 import imageProcessing.ImageTools;
@@ -39,7 +41,7 @@ public class Controller extends VBox {
     private MotorControl motorControl;
     private InputViewFeed inputViewFeed;
     private ImageRecorder imageRecorder;
-    private SerialCamera serialCamera;
+    private ImageInputSource imageInputSource;
     public Stage stage;
     //private File recordingLocation = null;
     private String recordingLocation;
@@ -121,18 +123,18 @@ public class Controller extends VBox {
             dto.Properties.MOTOR_PX_PER_STEP_Y = (double) (dto.Properties.IMAGE_HEIGHT * dto.Properties.MOTOR_PX_PER_STEP_Y) / 480;
             dto.Properties.MOVE_DECISION_CONFIDENCE_DISTANCE = (double) (dto.Properties.IMAGE_HEIGHT * dto.Properties.IMAGE_WIDTH * dto.Properties.MOVE_DECISION_CONFIDENCE_DISTANCE) / (640 * 480);
             dto.Properties.MOVE_DECISION_BOUNDARY_PX = (int) (IMAGE_WIDTH * MOVE_DECISION_BOUNDARY_RATIO);
-            serialCamera = new SerialCamera();//new ImageSequence("//medixsrv/Nematodes/data/N2_nf7/input/");//
-            imageProducer = new ImageProducer(serialCamera);
+            imageInputSource = new SerialCamera();
+            imageProducer = new ImageProducer(imageInputSource);
             motorControl = new MotorControl((String) motorControlDeviceList.getSelectionModel().getSelectedItem());
             imageProducer.start();
             inputViewFeed = new InputViewFeed(imageProducer, this);
             inputViewFeed.start();
             connectDevicesButton.setDisable(true);
             dto.Properties.run = true;
-        } catch (CameraConnectException e) {
-            showExceptionError(e, "CameraConnectException", "Cannot connect to camera!");
         } catch (NullPointerException e) {
             showExceptionError(e, "NullPointerException", "Please select a resolution first!");
+        } catch (CameraConnectException e) {
+            showExceptionError(e, "CameraConnectException", "Can not connect to camera!");
         }
     }
 
@@ -299,7 +301,7 @@ public class Controller extends VBox {
                 motorControl.detach();
                 motorControl.closePort();
                 inputViewFeed.detach();
-                serialCamera.close();
+                imageInputSource.close();
                 dto.Properties.run = false;
                 trackingButton.setText("Start Tracking");
                 connectDevicesButton.setDisable(false);

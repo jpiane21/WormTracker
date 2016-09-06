@@ -56,7 +56,7 @@ public class ImageSequence implements ImageInputSource {
             if (fancy) {
                 imgBytes = ((DataBufferByte) (ImageIO.read(files[seek++]).getRaster().getDataBuffer())).getData();
             } else {
-                imgBytes = ((DataBufferByte) (ImageIO.read(new File(filePath + String.format("%07d", seek++) + ".jpg")).getRaster().getDataBuffer())).getData();
+                imgBytes = ((DataBufferByte) (ImageIO.read(new File(filePath + String.format("%07d", seek++) + ".jpeg")).getRaster().getDataBuffer())).getData();
             }
             return ByteBuffer.wrap(imgBytes);
         } catch (IOException e) {
@@ -75,6 +75,10 @@ public class ImageSequence implements ImageInputSource {
 		}
 		return false;*/
         return true;
+    }
+    
+    @Override
+    public void close(){
     }
 
 }
