@@ -42,7 +42,7 @@ public class SerialCamera implements ImageInputSource {
         } else {
             camera = Webcam.getDefault(); // grabs default, first cam from list
         }
-        //Webcam.setDriver(new GStreamerDriver());
+        Webcam.setDriver(new GStreamerDriver());
         startCamera();
     }
 
