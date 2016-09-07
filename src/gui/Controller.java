@@ -93,7 +93,7 @@ public class Controller extends VBox {
             recordingLocation = chooser.showDialog(stage).getAbsolutePath();
             fileLocation.setText(recordingLocation);
         } catch (NullPointerException ex) {
-
+            ex.printStackTrace();
         }
     }
 
@@ -355,6 +355,7 @@ public class Controller extends VBox {
                         clone.put(img);
                         img.rewind();
                     } catch (NullPointerException e) {
+                        e.printStackTrace();
                     }
                 }
                 if (clone != null) {

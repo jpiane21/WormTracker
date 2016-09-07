@@ -72,6 +72,7 @@ public class MotorControl implements Runnable {
         try {
             this.serialPort.closePort();
         } catch (SerialPortException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -194,6 +195,7 @@ public class MotorControl implements Runnable {
         try {
             serialPort.writeBytes((command + "\r").getBytes());
         } catch (SerialPortException e) {
+            e.printStackTrace();
         }
     }
 
@@ -246,6 +248,7 @@ public class MotorControl implements Runnable {
                 try {
                     Thread.sleep(500);
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 continue;
             }

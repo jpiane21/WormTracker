@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.ds.gstreamer.GStreamerDriver;
+//import com.github.sarxos.webcam.ds.gstreamer.GStreamerDriver;
+import com.github.sarxos.webcam.ds.javacv.JavaCvDriver;
 
 /**
  * An image source that gets images from a USB Camera
@@ -42,7 +43,7 @@ public class SerialCamera implements ImageInputSource {
         } else {
             camera = Webcam.getDefault(); // grabs default, first cam from list
         }
-        Webcam.setDriver(new GStreamerDriver());
+        Webcam.setDriver(new JavaCvDriver());
         startCamera();
     }
 

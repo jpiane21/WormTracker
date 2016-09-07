@@ -255,6 +255,7 @@ public class ImageProcessor implements Runnable {
         try {
             realCentroid = largestComponent(referenceImage);
         } catch (SegmentationFailureException e) {
+            e.printStackTrace();
             return false;
         }
         boolean realDistance = Math.abs(Math.sqrt(Math.pow(realCentroid[0]
@@ -426,7 +427,7 @@ public class ImageProcessor implements Runnable {
                                 isNew = true;
                                 lastSuccess = System.currentTimeMillis();
                             } catch (SegmentationFailureException e) {
-                                //System.out.println("No components.");
+                                System.out.println("No components.");
                             }
                         }
                         if (System.currentTimeMillis() - lastSuccess > SEGMENTATION_FAILURE_THRESHOLD) {
