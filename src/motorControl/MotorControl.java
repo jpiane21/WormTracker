@@ -240,7 +240,7 @@ public class MotorControl implements Runnable {
         if (imageProcessor == null) {
             throw new Error("ImageProcessor not attached.");
         }
-        lastMove = System.currentTimeMillis();
+//        lastMove = System.currentTimeMillis();
         while (true) {
             if (!run) {
                 try {
@@ -269,7 +269,7 @@ public class MotorControl implements Runnable {
                 if (imageProcessor.isConfident()) {
                     center(target);
                     imageProcessor.getNewReference();
-                    lastMove = System.currentTimeMillis();
+//                    lastMove = System.currentTimeMillis();
                     try {
                         Thread.sleep(MOVE_DECISION_POST_DELAY);
                     } catch (Exception e) {
@@ -286,11 +286,11 @@ public class MotorControl implements Runnable {
             if (!imageProcessor.run) {
                 break;
             }
-            if (System.currentTimeMillis() - lastMove > SEGMENTATION_FAILURE_THRESHOLD) {
-                imageProcessor.run = false;
-                GUI.getController().reset();
-                break;
-            }
+//            if (System.currentTimeMillis() - lastMove > SEGMENTATION_FAILURE_THRESHOLD) {
+//                imageProcessor.run = false;
+//                GUI.getController().reset();
+//                break;
+//            }
             try {
                 Thread.sleep(MOTOR_TICK_RATE);
             } catch (Exception e) {
