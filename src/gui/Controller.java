@@ -135,6 +135,7 @@ public class Controller extends VBox {
             dto.Properties.run = true;
         } catch (NullPointerException e) {
             showExceptionError(e, "NullPointerException", "Please select a resolution first!");
+//        }
         } catch (CameraConnectException e) {
             showExceptionError(e, "CameraConnectException", "Can not connect to camera!");
         }
@@ -363,7 +364,10 @@ public class Controller extends VBox {
                         e.printStackTrace();
                     }
                     continue;
-                }
+                } 
+//                else {
+//                    System.out.println("null");
+//                }
                 ByteBuffer clone = null;
                 synchronized (entry) {
                     ByteBuffer img = entry.img;
