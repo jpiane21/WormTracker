@@ -55,12 +55,21 @@
                  <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                        <children>
-                          <Button fx:id="trackingButton" layoutX="50.0" layoutY="156.0" mnemonicParsing="false" onMouseClicked="#tracking" prefWidth="100.0" text="Start Tracking" />
-                          <Button fx:id="recordingButton" layoutX="50.0" layoutY="190.0" mnemonicParsing="false" onMouseClicked="#recording" prefHeight="25.0" prefWidth="100.0" text="Start Recording" />
-                          <Button layoutX="87.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#up" prefWidth="28.0" text="▲" />
-                          <Button layoutX="87.0" layoutY="88.0" mnemonicParsing="false" onMouseClicked="#down" prefHeight="25.0" prefWidth="28.0" text="▼" />
-                          <Button layoutX="115.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#right" prefWidth="28.0" text="▶" />
-                          <Button layoutX="59.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#left" prefWidth="28.0" text="◀" />
+                        <Label layoutX="24.0" layoutY="52.0" text="Worm Type" />
+                          <Button fx:id="trackingButton" layoutX="51.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#tracking" prefWidth="100.0" text="Start Tracking" />
+                          <Button fx:id="recordingButton" layoutX="51.0" layoutY="291.0" mnemonicParsing="false" onMouseClicked="#recording" prefHeight="25.0" prefWidth="100.0" text="Start Recording" />
+                          <Button layoutX="88.0" layoutY="139.0" mnemonicParsing="false" onMouseClicked="#up" prefWidth="28.0" text="▲" />
+                          <Button layoutX="88.0" layoutY="189.0" mnemonicParsing="false" onMouseClicked="#down" prefHeight="25.0" prefWidth="28.0" text="▼" />
+                          <Button layoutX="116.0" layoutY="164.0" mnemonicParsing="false" onMouseClicked="#right" prefWidth="28.0" text="▶" />
+                          <Button layoutX="60.0" layoutY="164.0" mnemonicParsing="false" onMouseClicked="#left" prefWidth="28.0" text="◀" />
+                        <ChoiceBox fx:id="wormTypeChoiceBox" layoutX="24.0" layoutY="69.0" prefWidth="150.0" >
+                            <items>
+                                  <FXCollections fx:factory="observableArrayList">
+                                      <String fx:value="Che_2" />
+                                      <String fx:value="Others" />
+                                  </FXCollections>
+                              </items>
+                          </ChoiceBox>
                        </children></AnchorPane>
                  </content>
               </TitledPane>

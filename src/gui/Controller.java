@@ -55,6 +55,8 @@ public class Controller extends VBox {
     @FXML
     private ChoiceBox resolutionChoiceBox;
     @FXML
+    private ChoiceBox wormTypeChoiceBox;
+    @FXML
     private ImageView imageView;
     @FXML
     private Button trackingButton;
@@ -133,6 +135,7 @@ public class Controller extends VBox {
             dto.Properties.run = true;
         } catch (NullPointerException e) {
             showExceptionError(e, "NullPointerException", "Please select a resolution first!");
+//        }
         } catch (CameraConnectException e) {
             showExceptionError(e, "CameraConnectException", "Can not connect to camera!");
         }
@@ -147,6 +150,15 @@ public class Controller extends VBox {
             if (imageProducer == null) {
                 showWarning("No devices connected", "Please connect a camera and motor control device before continuing.");
                 return;
+            }
+            String wormType = (String) wormTypeChoiceBox.getSelectionModel().getSelectedItem();
+            switch (wormType) {
+                case "Che_2":
+                    dto.Properties.SEGMENTATION_FAILURE_THRESHOLD = 900000;
+                    break;
+                default:
+                    dto.Properties.SEGMENTATION_FAILURE_THRESHOLD = 600000;
+                    break;
             }
             if (imageProcessor == null) {
                 imageProcessor = new ImageProcessor(imageProducer);
@@ -282,7 +294,14 @@ public class Controller extends VBox {
             accordion.setExpandedPane(devicePane);
         });
     }
-
+    
+    @FXML
+    protected void refreshWormTypes() {
+        Platform.runLater(() -> {
+            wormTypeChoiceBox.getSelectionModel().selectLast();
+       });
+    }
+    
     @FXML
     public void reset() {
         Platform.runLater(new Runnable() {
@@ -345,7 +364,10 @@ public class Controller extends VBox {
                         e.printStackTrace();
                     }
                     continue;
-                }
+                } 
+//                else {
+//                    System.out.println("null");
+//                }
                 ByteBuffer clone = null;
                 synchronized (entry) {
                     ByteBuffer img = entry.img;

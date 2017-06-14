@@ -13,7 +13,7 @@ public class Properties {
     public static int SEGMENTATION_COMPONENT_MIN_SIZE = 5;
     public static double SEGMENTATION_THRESHOLD = 0.80; //Magic number. Don't touch.
     public static int SEGMENTATION_DELAY = 15;
-    public static int SEGMENTATION_FAILURE_THRESHOLD = 1200000; //Time until we give up trying
+    public static int SEGMENTATION_FAILURE_THRESHOLD = 600000; //Time until we give up trying
 
     /**
      * MOTOR_STEP_MODE controls what step mode the stepper motors will be

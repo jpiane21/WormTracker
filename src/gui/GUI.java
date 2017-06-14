@@ -58,6 +58,7 @@ public class GUI extends Application {
             controller = loader.getController();
             controller.stage = primaryStage;
             controller.refreshVideoInputDevices();
+            controller.refreshWormTypes();
         } catch (IOException e) {
             e.printStackTrace();
         }
